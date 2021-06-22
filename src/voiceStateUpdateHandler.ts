@@ -33,6 +33,10 @@ const sendStartingSessionMessage = (
   })
 }
 
+const isAfkChannel = ({ guild, channel }: VoiceState): boolean => {
+  return guild.afkChannelID === channel?.id
+}
+
 const getCountOfHuman = ({ channel }: VoiceState): number => {
   return channel?.members
     ? channel.members.filter((member) => !member.user.bot).size
@@ -43,7 +47,7 @@ export const create: (webhook: IncomingWebhook) => voiceStateUpdateHandler = (
   webhook
 ) => {
   return async (before: VoiceState, after: VoiceState) => {
-    if (getCountOfHuman(after) === 1 && after.channel) {
+    if (!isAfkChannel(after) && getCountOfHuman(after) === 1 && after.channel) {
       return sendStartingSessionMessage(webhook, {
         channel: after.channel,
         guild: after.guild,
