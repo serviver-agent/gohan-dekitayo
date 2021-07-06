@@ -15,3 +15,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'sviver-gohan-dekitayo'
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+        env:
+          DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+          SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
